@@ -1,6 +1,8 @@
 from django.contrib import admin
 
-from .models import Team, Person
+from .models import Uzytkownik
+admin.site.register(Uzytkownik)
 
-admin.site.register(Team)
-admin.site.register(Person)
+admin.register(Uzytkownik)
+class UzytkownikAdmin(admin.ModelAdmin):
+    list_display = ('imie', 'nazwisko', 'email', 'plec', 'data_dodania')
