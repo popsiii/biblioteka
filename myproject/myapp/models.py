@@ -225,8 +225,6 @@ WYDAWNICTWA = models.IntegerChoices(
 
 OKLADKA = models.IntegerChoices('okładka', 'twarda miękka')
 
-GATUNKI = models.IntegerChoices('gatunki', 'kryminał thriller cośtam')
-
 class Gatunek(models.Model):
     nazwa_gatunku = models.CharField(max_length=100)
 
