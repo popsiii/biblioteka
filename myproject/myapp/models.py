@@ -1,4 +1,5 @@
 from datetime import date
+from django.utils.timezone import now
 from django.db import models
 from django.contrib.auth.models import User 
 from django.core.validators import RegexValidator
@@ -225,8 +226,6 @@ WYDAWNICTWA = models.IntegerChoices(
 
 OKLADKA = models.IntegerChoices('okładka', 'twarda miękka')
 
-GATUNKI = models.IntegerChoices('gatunki', 'kryminał thriller cośtam')
-
 class Gatunek(models.Model):
     nazwa_gatunku = models.CharField(max_length=100)
 
@@ -255,3 +254,30 @@ class Ksiazka(models.Model):
     class Meta:
         verbose_name = "Książka"
         verbose_name_plural = "Książki"
+
+
+
+class Wypozyczenia(models.Model):
+    uzytkownik = models.ForeignKey('Uzytkownik', on_delete=models.CASCADE)
+    ksiazka = models.ForeignKey('Ksiazka', on_delete=models.CASCADE)
+    data_wypozyczenia = models.DateField(default=now, verbose_name="Data wypożyczenia")
+
+    def __str__(self):
+        return f"{self.uzytkownik} wypożyczył/a {self.ksiazka} w dniu {self.data_wypozyczenia.strftime('%Y-%m-%d')}"
+    
+    class Meta:
+        verbose_name = "Wypożyczenie"
+        verbose_name_plural = "Wypożyczenia"
+
+class HistoriaWypozyczen(models.Model):
+    uzytkownik = models.ForeignKey('Uzytkownik', on_delete=models.SET_NULL, null=True, related_name='historia_wypozyczen')
+    ksiazka = models.ForeignKey('Ksiazka', on_delete=models.SET_NULL, null=True, related_name='historia_wypozyczen')
+    data_wypozyczenia = models.DateField()
+    data_zwrotu = models.DateField(default=now)
+
+    def __str__(self):
+        return f"{self.uzytkownik} zwrócił/a {self.ksiazka} (wypożyczona {self.data_wypozyczenia.strftime('%Y-%m-%d')}, zwrócona {self.data_zwrotu.strftime('%Y-%m-%d')})"
+    
+    class Meta:
+        verbose_name = "Historia wypożyczeń"
+        verbose_name_plural = "Historia wypożyczeń"
