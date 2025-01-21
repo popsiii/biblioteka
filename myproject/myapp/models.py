@@ -257,7 +257,8 @@ class Ksiazka(models.Model):
     gatunek = models.ManyToManyField(Gatunek)
 
     def __str__(self):
-        return f"{self.tytul} by {self.autor} ({self.rok_wydania})"
+        autorzy = ", ".join([str(autor) for autor in self.autor.all()])  # Pobranie listy autorów
+        return f'"{self.tytul}" by {autorzy} ({self.rok_wydania})'
     
     class Meta:
         verbose_name = "Książka"
