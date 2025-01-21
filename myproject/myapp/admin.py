@@ -4,7 +4,13 @@ from .models import HistoriaWypozyczen, Uzytkownik, Ksiazka, Gatunek, Wypozyczen
 admin.site.register(Uzytkownik)
 admin.site.register(Ksiazka)
 admin.site.register(Gatunek)
-admin.site.register(Autor)
+
+
+
+class AutorAdmin(admin.ModelAdmin) :
+    list_display = ("imie_autora", "nazwisko_autora")
+
+admin.site.register(Autor, AutorAdmin)
 
 
 admin.register(Uzytkownik)

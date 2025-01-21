@@ -245,8 +245,6 @@ class Autor(models.Model):
     def __str__(self):
         return f"{self.imie_autora} {self.nazwisko_autora}"
     
-    def __repr__(self):
-        return f"{self.imie_autora} {self.nazwisko_autora}"
 
 class Ksiazka(models.Model):
     tytul = models.CharField(max_length=200)
