@@ -2,6 +2,7 @@ from datetime import date
 from rest_framework import serializers
 from .models import Gatunek, Ksiazka, Uzytkownik 
 
+<<<<<<< HEAD
 
 class UzytkownikSerializer(serializers.ModelSerializer):
     def validate_imie(self, value):
@@ -25,6 +26,9 @@ class GatunekSerializer(serializers.ModelSerializer):
         fields = ['nazwa']
         
 class BookSerializer(serializers.ModelSerializer):
+=======
+class KsiazkaSerializer(serializers.ModelSerializer):
+>>>>>>> 31b6cf79c82ce6c9cc72082ffed60aeb00ee9db2
     class Meta:
         model = Ksiazka
         fields = ['tytul', 'autor', 'wydawnictwo', 'rok_wydania', 'liczba_stron', 'ISBN', 'okładka', 'gatunek']
