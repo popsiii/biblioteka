@@ -58,6 +58,7 @@ WYDAWNICTWA = models.IntegerChoices(
     'Genius_Creations '
     'Hejnał '
     'Homo_Dei '
+    'Hengal' 
     'Towarzystwo_Wydawnicze_Ignis '
     'Inforteditions '
     'Insignis_Media '
@@ -237,10 +238,19 @@ class Gatunek(models.Model):
         verbose_name_plural = "Gatunki"
 
 
+class Autor(models.Model): 
+    imie_autora = models.CharField(max_length=100)
+    nazwisko_autora = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.imie_autora} {self.nazwisko_autora}"
+    
+    def __repr__(self):
+        return f"{self.imie_autora} {self.nazwisko_autora}"
 
 class Ksiazka(models.Model):
     tytul = models.CharField(max_length=200)
-    autor = models.CharField(max_length=100)
+    autor = models.ManyToManyField(Autor)
     wydawnictwo = models.IntegerField(choices=WYDAWNICTWA.choices)
     rok_wydania = models.CharField(max_length=4)
     liczba_stron = models.IntegerField()
