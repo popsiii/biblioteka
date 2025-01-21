@@ -7,6 +7,11 @@ class KsiazkaSerializer(serializers.ModelSerializer):
         model = Ksiazka
         fields = ['tytul', 'autor', 'wydawnictwo', 'rok_wydania', 'liczba_stron', 'ISBN', 'okładka', 'gatunek']
 
+    def validate_liczba(self, value):
+        if value <= 0:
+            raise serializers.ValidationError("Liczba stron musi być większa niż zero!")
+        return value
+
 
 class UzytkownikSerializer(serializers.ModelSerializer):
     def validate_imie(self, value):
@@ -24,11 +29,7 @@ class UzytkownikSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Nieprawidłowy adres email!")
         return value
 
-class KsiazkaSerializer(serializers.ModelSerializer):
-    def validate_liczba(self, value):
-        if value <= 0:
-            raise serializers.ValidationError("Liczba stron musi być większa niż zero!")
-        return value
+
 
 
 

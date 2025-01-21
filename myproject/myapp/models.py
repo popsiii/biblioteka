@@ -1,12 +1,11 @@
 from datetime import date
 from django.utils.timezone import now
 from django.db import models
-from django.contrib.auth.models import AbstractUser 
 from django.core.validators import RegexValidator
 
-PLEC = models.IntegerChoices('Płeć', 'Kobieta Męzczyzna Inna Nie_chcę_podawać')
+PLEC = models.IntegerChoices('Płeć', 'Kobieta Mężczyzna Inna Nie_chcę_podawać')
 
-class Uzytkownik(AbstractUser):
+class Uzytkownik(models.Model):
     imie = models.CharField(max_length=60)
     nazwisko = models.CharField(max_length=80)
     email = models.EmailField(unique=True)
@@ -19,6 +18,7 @@ class Uzytkownik(AbstractUser):
     class Meta:
         verbose_name = "Użytkownik"
         verbose_name_plural = "Użytkownicy"
+
 
 WYDAWNICTWA = models.IntegerChoices(
     'Wydawnictwo',
