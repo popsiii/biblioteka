@@ -1,11 +1,11 @@
 from datetime import date
 from rest_framework import serializers
-from .models import Gatunek, Ksiazka, Uzytkownik 
+from .models import Ksiazka, Uzytkownik, Wypozyczenia, HistoriaWypozyczen
 
 class KsiazkaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ksiazka
-        fields = ['tytul', 'autor', 'wydawnictwo', 'rok_wydania', 'liczba_stron', 'ISBN', 'okładka', 'gatunek']
+        fields = ['id', 'tytul', 'autor', 'wydawnictwo', 'rok_wydania', 'liczba_stron', 'ISBN', 'okładka', 'gatunek']
 
     def validate_liczba(self, value):
         if value <= 0:
@@ -29,6 +29,15 @@ class UzytkownikSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Nieprawidłowy adres email!")
         return value
 
+class WypozyczeniaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Wypozyczenia
+        fields = ['id', 'uzytkownik', 'ksiazka', 'data_wypozyczenia']
+
+class HistoriaWypozyczenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HistoriaWypozyczen
+        fields = ['id', 'uzytkownik', 'ksiazka', 'data_wypozyczenia', 'data_zwrotu']
 
 
 

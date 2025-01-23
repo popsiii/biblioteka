@@ -1,7 +1,12 @@
-from django.urls import path
-from .views import KsiazkaListCreate, KsiazkaDetail
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import KsiazkaViewSet, WypozyczeniaViewSet, HistoriaWypozyczenViewSet
+
+router = DefaultRouter()
+router.register(r'ksiazki', KsiazkaViewSet, basename='ksiazki')
+router.register(r'wypozyczenia', WypozyczeniaViewSet, basename='wypozyczenia')
+router.register(r'historia-wypozyczen', HistoriaWypozyczenViewSet, basename='historia-wypozyczen')
 
 urlpatterns = [
-    path('ksiazki/', KsiazkaListCreate.as_view(), name='ksiazka-list-create'),
-    path('ksiazki/<int:pk>/', KsiazkaDetail.as_view(), name='ksiazka-detail'),
+    path('api/', include(router.urls)),
 ]
