@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import KsiazkaViewSet, WypozyczeniaViewSet, HistoriaWypozyczenViewSet
+from .views import KsiazkaViewSet, WypozyczeniaViewSet, HistoriaWypozyczenViewSet, SignUpView
 
 router = DefaultRouter()
 router.register(r'ksiazki', KsiazkaViewSet, basename='ksiazki')
@@ -9,4 +9,6 @@ router.register(r'historia-wypozyczen', HistoriaWypozyczenViewSet, basename='his
 
 urlpatterns = [
     path('api/', include(router.urls)),
+    path('signup/', SignUpView.as_view(), name='signup'), 
+
 ]
