@@ -129,3 +129,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'myapp.Uzytkownik'
 
 
+# filepath: /Users/werus/biblioteka/myproject/myproject/settings.py
+LOGIN_REDIRECT_URL = '/profile/'

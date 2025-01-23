@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from .forms import CustomUserCreationForm
 
 
 
@@ -39,9 +40,8 @@ class HistoriaWypozyczenViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = HistoriaWypozyczenSerializer
 
 
-
 class SignUpView(generic.CreateView):
-    form_class = UserCreationForm
+    form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'registration/signup.html'
 
@@ -60,3 +60,8 @@ def profile(request):
         'historia_wypozyczen': historia_wypozyczen,
     }
     return render(request, 'profile.html', context)
+
+
+@login_required
+def profile(request):
+    return render(request, 'myapp/profile.html')
