@@ -236,11 +236,20 @@ class Gatunek(models.Model):
         verbose_name = "Gatunek"
         verbose_name_plural = "Gatunki"
 
+class Autor(models.Model): 
+    imie_autora = models.CharField(max_length=100)
+    nazwisko_autora = models.CharField(max_length=100)
 
+    def __str__(self):
+        return f"{self.imie_autora} {self.nazwisko_autora}" 
+    
+    class Meta:
+        verbose_name = "Autor"
+        verbose_name_plural = "Autorzy"
 
 class Ksiazka(models.Model):
     tytul = models.CharField(max_length=200)
-    autor = models.CharField(max_length=100)
+    autor = models.ManyToManyField(Autor)
     wydawnictwo = models.IntegerField(choices=WYDAWNICTWA.choices)
     rok_wydania = models.CharField(max_length=4)
     liczba_stron = models.IntegerField()
@@ -249,7 +258,8 @@ class Ksiazka(models.Model):
     gatunek = models.ManyToManyField(Gatunek)
 
     def __str__(self):
-        return f"{self.tytul} by {self.autor} ({self.rok_wydania})"
+        autorzy = ", ".join([str(autor) for autor in self.autor.all()])  # Pobranie listy autorów
+        return f'"{self.tytul}" by {autorzy} ({self.rok_wydania})'
     
     class Meta:
         verbose_name = "Książka"
@@ -263,7 +273,7 @@ class Wypozyczenia(models.Model):
     data_wypozyczenia = models.DateField(default=now, verbose_name="Data wypożyczenia")
 
     def __str__(self):
-        return f"{self.uzytkownik} wypożyczył/a {self.ksiazka} w dniu {self.data_wypozyczenia.strftime('%Y-%m-%d')}"
+        return f'{self.uzytkownik} wypożyczył/a "{self.ksiazka.tytul}" w dniu {self.data_wypozyczenia.strftime("%Y-%m-%d")}'
 
     def zwroc_ksiazke(self):
         HistoriaWypozyczen.objects.create(
@@ -285,7 +295,7 @@ class HistoriaWypozyczen(models.Model):
     data_zwrotu = models.DateField(default=now)
 
     def __str__(self):
-        return f"{self.uzytkownik} zwrócił/a {self.ksiazka} w dniu {self.data_zwrotu.strftime('%Y-%m-%d')}"
+        return f'{self.uzytkownik} zwrócił/a "{self.ksiazka.tytul}" w dniu {self.data_zwrotu.strftime("%Y-%m-%d")}'
 
     class Meta:
         verbose_name = "Historia Wypożyczeń"
