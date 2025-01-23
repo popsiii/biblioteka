@@ -1,11 +1,26 @@
 from django.contrib import admin
 
-from .models import HistoriaWypozyczen, Uzytkownik, Ksiazka, Gatunek, Wypozyczenia
+from .models import Autor, HistoriaWypozyczen, Uzytkownik, Ksiazka, Gatunek, Wypozyczenia
 admin.site.register(Uzytkownik)
-admin.site.register(Ksiazka)
-
-
 admin.site.register(Gatunek)
+
+
+class KsiazkaAdmin(admin.ModelAdmin):
+    list_display = ('tytul', 'get_autor', 'rok_wydania', 'ISBN')
+
+    def get_autor(self, obj):
+        return ", ".join([str(autor) for autor in obj.autor.all()])
+    get_autor.short_description = 'Autor'
+
+    filter_horizontal = ('gatunek',)
+
+admin.site.register(Ksiazka, KsiazkaAdmin)
+
+
+class AutorAdmin(admin.ModelAdmin):
+    list_display = ('imie_autora', 'nazwisko_autora')
+
+admin.site.register(Autor, AutorAdmin)
 
 admin.register(Uzytkownik)
 class UzytkownikAdmin(admin.ModelAdmin):
