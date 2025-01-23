@@ -264,7 +264,16 @@ class Wypozyczenia(models.Model):
 
     def __str__(self):
         return f"{self.uzytkownik} wypożyczył/a {self.ksiazka} w dniu {self.data_wypozyczenia.strftime('%Y-%m-%d')}"
-    
+
+    def zwroc_ksiazke(self):
+        HistoriaWypozyczen.objects.create(
+            uzytkownik=self.uzytkownik,
+            ksiazka=self.ksiazka,
+            data_wypozyczenia=self.data_wypozyczenia,
+            data_zwrotu=now()
+        )
+        self.delete()
+
     class Meta:
         verbose_name = "Wypożyczenie"
         verbose_name_plural = "Wypożyczenia"
@@ -276,8 +285,8 @@ class HistoriaWypozyczen(models.Model):
     data_zwrotu = models.DateField(default=now)
 
     def __str__(self):
-        return f"{self.uzytkownik} zwrócił/a {self.ksiazka} (wypożyczona {self.data_wypozyczenia.strftime('%Y-%m-%d')}, zwrócona {self.data_zwrotu.strftime('%Y-%m-%d')})"
-    
+        return f"{self.uzytkownik} zwrócił/a {self.ksiazka} w dniu {self.data_zwrotu.strftime('%Y-%m-%d')}"
+
     class Meta:
-        verbose_name = "Historia wypożyczeń"
-        verbose_name_plural = "Historia wypożyczeń"
+        verbose_name = "Historia Wypożyczeń"
+        verbose_name_plural = "Historia Wypożyczeń"
