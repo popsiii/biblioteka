@@ -6,6 +6,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
 
 
 class KsiazkaViewSet(viewsets.ModelViewSet):
@@ -43,3 +45,17 @@ class SignUpView(generic.CreateView):
     success_url = reverse_lazy('login')
     template_name = 'registration/signup.html'
 
+
+def home(request):
+    return render(request, 'home.html') 
+
+
+@login_required
+def profile(request):
+    wypozyczenia = Wypozyczenia.objects.filter(uzytkownik=request.user)
+    historia_wypozyczen = HistoriaWypozyczen.objects.filter(uzytkownik=request.user)
+    context = {
+        'wypozyczenia': wypozyczenia,
+        'historia_wypozyczen': historia_wypozyczen,
+    }
+    return render(request, 'profile.html', context)

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Profile</h2>
+  <h3>Current Loans</h3>
+  <ul>
+    {% for wypozyczenie in wypozyczenia %}
+      <li>{{ wypozyczenie.ksiazka.tytul }} - Borrowed on {{ wypozyczenie.data_wypozyczenia }}</li>
+    {% empty %}
+      <li>No current loans.</li>
+    {% endfor %}
+  </ul>
+
+  <h3>Loan History</h3>
+  <ul>
+    {% for historia in historia_wypozyczen %}
+      <li>{{ historia.ksiazka.tytul }} - Borrowed on {{ historia.data_wypozyczenia }} - Returned on {{ historia.data_zwrotu }}</li>
+    {% empty %}
+      <li>No loan history.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
