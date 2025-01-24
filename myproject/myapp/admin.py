@@ -5,6 +5,8 @@ admin.site.register(Uzytkownik)
 admin.site.register(Gatunek)
 
 
+
+
 class KsiazkaAdmin(admin.ModelAdmin):
     list_display = ('tytul', 'get_autor', 'rok_wydania', 'ISBN')
 
@@ -39,4 +41,6 @@ class HistoriaWypozyczenAdmin(admin.ModelAdmin) :
     list_display = ("uzytkownik", "ksiazka", "data_wypozyczenia", "data_zwrotu")
 
 admin.site.register(HistoriaWypozyczen, HistoriaWypozyczenAdmin)
+
+
 

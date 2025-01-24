@@ -2,6 +2,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Witaj, {{ user.imie }}!</h1>
-<p>To jest Twoja strona profilu.</p>
+<h1>Elo, {{ user.imie }}!</h1>
+<p>Witaj w swojej świątyni.</p>
+<p><a href="{% url 'wypozycz_ksiazke' %}">Wypożycz książkę</a></p>
+
+<h2>Twoje wypożyczenia</h2>
+<ul>
+    {% for wypozyczenie in user.wypozyczenia_set.all %}
+    <li>{{ wypozyczenie.ksiazka.tytul }} - {{ wypozyczenie.data_wypozyczenia }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Historia wypożyczeń</h2>
+<ul>
+    {% for historia in user.historia_wypozyczen.all %}
+    <li>{{ historia.ksiazka.tytul }} - {{ historia.data_zwrotu }}</li>
+    {% endfor %}
+</ul>
 {% endblock %}

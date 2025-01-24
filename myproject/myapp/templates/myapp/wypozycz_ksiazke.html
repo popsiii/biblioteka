@@ -1,0 +1,14 @@
+<!-- filepath: /Users/werus/biblioteka/myproject/myapp/templates/myapp/wypozycz_ksiazke.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Wypożycz książkę</h1>
+<ul>
+    {% for ksiazka in ksiazki %}
+    <li>
+        {{ ksiazka.tytul }} - {{ ksiazka.autor.all|join:", " }}
+        <a href="{% url 'wypozycz' ksiazka.id %}">Wypożycz</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

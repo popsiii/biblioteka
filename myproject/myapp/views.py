@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
 
@@ -52,16 +52,15 @@ def home(request):
 
 @login_required
 def profile(request):
-    uzytkownik = Uzytkownik.objects.get(username=request.user.username)
-    wypozyczenia = Wypozyczenia.objects.filter(uzytkownik=uzytkownik)
-    historia_wypozyczen = HistoriaWypozyczen.objects.filter(uzytkownik=uzytkownik)
-    context = {
-        'wypozyczenia': wypozyczenia,
-        'historia_wypozyczen': historia_wypozyczen,
-    }
-    return render(request, 'profile.html', context)
-
+    return render(request, 'myapp/profile.html')
 
 @login_required
-def profile(request):
-    return render(request, 'myapp/profile.html')
+def wypozycz_ksiazke(request):
+    ksiazki = Ksiazka.objects.all()
+    return render(request, 'myapp/wypozycz_ksiazke.html', {'ksiazki': ksiazki})
+
+@login_required
+def wypozycz(request, ksiazka_id):
+    ksiazka = get_object_or_404(Ksiazka, id=ksiazka_id)
+    Wypozyczenia.objects.create(uzytkownik=request.user, ksiazka=ksiazka)
+    return redirect('profile')
