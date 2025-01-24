@@ -4,10 +4,21 @@ body {
 }
 
 .jumbotron {
-    background-color: #a7c2dd;
+    background-color: #b7d2ee;
     padding: 2rem 1rem;
 }
 
 .card {
     margin-bottom: 3rem;
+}
+
+.btn-custom {
+    background-color: #ad33ff;
+    color: white;
+    border: none;
+}
+
+.btn-custom:hover {
+    background-color: #5f1a8d;
+    color: white;
 }
