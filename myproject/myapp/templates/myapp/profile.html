@@ -9,7 +9,10 @@
 <h2>Twoje wypożyczenia</h2>
 <ul>
     {% for wypozyczenie in user.wypozyczenia_set.all %}
-    <li>{{ wypozyczenie.ksiazka.tytul }} - {{ wypozyczenie.data_wypozyczenia }}</li>
+    <li>
+        {{ wypozyczenie.ksiazka.tytul }} - {{ wypozyczenie.data_wypozyczenia }}
+        <a href="{% url 'zwroc_ksiazke' wypozyczenie.id %}">Zwróć</a>
+    </li>
     {% endfor %}
 </ul>
 

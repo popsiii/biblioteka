@@ -64,3 +64,10 @@ def wypozycz(request, ksiazka_id):
     ksiazka = get_object_or_404(Ksiazka, id=ksiazka_id)
     Wypozyczenia.objects.create(uzytkownik=request.user, ksiazka=ksiazka)
     return redirect('profile')
+
+
+@login_required
+def zwroc_ksiazke(request, wypozyczenie_id):
+    wypozyczenie = get_object_or_404(Wypozyczenia, id=wypozyczenie_id)
+    wypozyczenie.zwroc_ksiazke()
+    return redirect('profile')
