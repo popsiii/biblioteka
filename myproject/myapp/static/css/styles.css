@@ -1,0 +1,13 @@
+/* filepath: /Users/werus/biblioteka/myproject/myapp/static/css/styles.css */
+body {
+    background-color: #2a75c1;
+}
+
+.jumbotron {
+    background-color: #a7c2dd;
+    padding: 2rem 1rem;
+}
+
+.card {
+    margin-bottom: 3rem;
+}

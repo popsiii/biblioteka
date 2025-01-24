@@ -2,24 +2,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Elo, {{ user.imie }}!</h1>
-<p>Witaj w swojej świątyni.</p>
-<p><a href="{% url 'wypozycz_ksiazke' %}">Wypożycz książkę</a></p>
+<div class="jumbotron">
+    <h1 class="display-4">Elo, {{ user.imie }}!</h1>
+    <p class="lead">Witaj w swojej świątyni.</p>
+    <hr class="my-4">
+    <p><a class="btn btn-primary btn-lg" href="{% url 'wypozycz_ksiazke' %}" role="button">Wypożycz książkę</a></p>
+</div>
 
-<h2>Twoje wypożyczenia</h2>
-<ul>
-    {% for wypozyczenie in user.wypozyczenia_set.all %}
-    <li>
-        {{ wypozyczenie.ksiazka.tytul }} - {{ wypozyczenie.data_wypozyczenia }}
-        <a href="{% url 'zwroc_ksiazke' wypozyczenie.id %}">Zwróć</a>
-    </li>
-    {% endfor %}
-</ul>
+<div class="card mb-4">
+    <div class="card-header">
+        Twoje wypożyczenia
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for wypozyczenie in user.wypozyczenia_set.all %}
+        <li class="list-group-item">
+            {{ wypozyczenie.ksiazka.tytul }} - {{ wypozyczenie.data_wypozyczenia }}
+            <a class="btn btn-danger btn-sm float-right" href="{% url 'zwroc_ksiazke' wypozyczenie.id %}">Zwróć</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 
-<h2>Historia wypożyczeń</h2>
-<ul>
-    {% for historia in user.historia_wypozyczen.all %}
-    <li>{{ historia.ksiazka.tytul }} - {{ historia.data_zwrotu }}</li>
-    {% endfor %}
-</ul>
+<div class="card">
+    <div class="card-header">
+        Historia wypożyczeń
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for historia in user.historia_wypozyczen.all %}
+        <li class="list-group-item">
+            {{ historia.ksiazka.tytul }} - {{ historia.data_zwrotu }}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
