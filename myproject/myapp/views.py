@@ -71,3 +71,20 @@ def zwroc_ksiazke(request, wypozyczenie_id):
     wypozyczenie = get_object_or_404(Wypozyczenia, id=wypozyczenie_id)
     wypozyczenie.zwroc_ksiazke()
     return redirect('profile')
+
+# filepath: /Users/werus/biblioteka/myproject/myapp/views.py
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from .models import Ksiazka, Wypozyczenia, HistoriaWypozyczen
+
+@login_required
+def profile(request):
+    if request.user.is_staff:
+        wypozyczenia = Wypozyczenia.objects.all()
+    else:
+        wypozyczenia = Wypozyczenia.objects.filter(uzytkownik=request.user)
+    historia_wypozyczen = HistoriaWypozyczen.objects.filter(uzytkownik=request.user)
+    return render(request, 'myapp/profile.html', {
+        'wypozyczenia': wypozyczenia,
+        'historia_wypozyczen': historia_wypozyczen
+    })
