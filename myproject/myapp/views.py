@@ -76,6 +76,8 @@ def zwroc_ksiazke(request, wypozyczenie_id):
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Ksiazka, Wypozyczenia, HistoriaWypozyczen
+from django.views.decorators.http import require_POST
+from django.contrib.auth import logout
 
 @login_required
 def profile(request):
@@ -88,3 +90,12 @@ def profile(request):
         'wypozyczenia': wypozyczenia,
         'historia_wypozyczen': historia_wypozyczen
     })
+
+@require_POST
+@login_required
+def logout_view(request):
+    logout(request)
+    return render(request, 'registration/logout.html')
+
+def nasza_biblioteka(request):
+    return render(request, 'myapp/nasza_biblioteka.html')
