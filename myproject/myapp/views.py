@@ -89,14 +89,17 @@ def profile(request):
     if request.user.is_staff:
         wypozyczenia = Wypozyczenia.objects.all()
         uzytkownicy = Uzytkownik.objects.all()
+        ksiazki = Ksiazka.objects.all()
     else:
         wypozyczenia = Wypozyczenia.objects.filter(uzytkownik=request.user)
         uzytkownicy = None
+        ksiazki = None
     historia_wypozyczen = HistoriaWypozyczen.objects.filter(uzytkownik=request.user)
     return render(request, 'myapp/profile.html', {
         'wypozyczenia': wypozyczenia,
         'historia_wypozyczen': historia_wypozyczen,
-        'uzytkownicy': uzytkownicy
+        'uzytkownicy': uzytkownicy, 
+        'ksiazki': ksiazki
     })
 
 @require_POST
@@ -107,3 +110,63 @@ def logout_view(request):
 
 def nasza_biblioteka(request):
     return render(request, 'myapp/nasza_biblioteka.html')
+
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Ksiazka
+from .forms import KsiazkaForm
+
+def is_superuser(user):
+    return user.is_superuser
+
+
+@login_required
+def home(request):
+    ksiazki = Ksiazka.objects.all()
+    return render(request, 'myapp/home.html', {'ksiazki': ksiazki})
+
+@login_required
+def szczegoly_ksiazki(request, ksiazka_id):
+    ksiazka = get_object_or_404(Ksiazka, id=ksiazka_id)
+    return render(request, 'myapp/szczegoly_ksiazki.html', {'ksiazka': ksiazka})
+
+
+@user_passes_test(is_superuser)
+@login_required
+def lista_ksiazek(request):
+    ksiazki = Ksiazka.objects.all()
+    return render(request, 'myapp/lista_ksiazek.html', {'ksiazki': ksiazki})
+
+@user_passes_test(is_superuser)
+@login_required
+def dodaj_ksiazke(request):
+    if request.method == 'POST':
+        form = KsiazkaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_ksiazek')
+    else:
+        form = KsiazkaForm()
+    return render(request, 'myapp/dodaj_ksiazke.html', {'form': form})
+
+@user_passes_test(is_superuser)
+@login_required
+def edytuj_ksiazke(request, ksiazka_id):
+    ksiazka = get_object_or_404(Ksiazka, id=ksiazka_id)
+    if request.method == 'POST':
+        form = KsiazkaForm(request.POST, instance=ksiazka)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_ksiazek')
+    else:
+        form = KsiazkaForm(instance=ksiazka)
+    return render(request, 'myapp/edytuj_ksiazke.html', {'form': form})
+
+@user_passes_test(is_superuser)
+@login_required
+def usun_ksiazke(request, ksiazka_id):
+    ksiazka = get_object_or_404(Ksiazka, id=ksiazka_id)
+    if request.method == 'POST':
+        ksiazka.delete()
+        return redirect('lista_ksiazek')
+    return render(request, 'myapp/usun_ksiazke.html', {'ksiazka': ksiazka})

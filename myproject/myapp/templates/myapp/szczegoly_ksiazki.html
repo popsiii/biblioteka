@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>{{ ksiazka.tytul }}</h1>
+    <h2 class="text-muted">{{ ksiazka.get_autor }}</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <img src="{{ ksiazka.okladka.url }}" class="img-fluid" alt="Okładka książki">
+        </div>
+        <div class="col-md-8">
+            <p><strong>Rok wydania:</strong> {{ ksiazka.rok_wydania }}</p>
+            <p><strong>ISBN:</strong> {{ ksiazka.ISBN }}</p>
+            <p><strong>Liczba stron:</strong> {{ ksiazka.liczba_stron }}</p>
+            <p><strong>Gatunek:</strong> {{ ksiazka.gatunek }}</p>
+            <p><strong>Opis:</strong> {{ ksiazka.opis }}</p>
+        </div>
+    </div>
+    <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Powrót</a>
+</div>
+{% endblock %}

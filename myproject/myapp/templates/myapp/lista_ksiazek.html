@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Lista Książek</h1>
+    <a href="{% url 'dodaj_ksiazke' %}" class="btn btn-primary mb-3">Dodaj Książkę</a>
+    <div class="row">
+        {% for ksiazka in ksiazki %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ ksiazka.tytul }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ ksiazka.get_autor }}</h6>
+                    <p class="card-text">Rok wydania: {{ ksiazka.rok_wydania }}</p>
+                    <p class="card-text">ISBN: {{ ksiazka.ISBN }}</p>
+                    <a href="{% url 'edytuj_ksiazke' ksiazka.id %}" class="btn btn-warning">Edytuj</a>
+                    <a href="{% url 'usun_ksiazke' ksiazka.id %}" class="btn btn-danger">Usuń</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

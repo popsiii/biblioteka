@@ -1,6 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h2>Welcome to the Library</h2>
-  <p>This is the home page of our application.</p>
+<div class="container mt-4">
+    <h2>Welcome to the Library</h2>
+    <p>This is the home page of our application.</p>
+
+    <h1 class="mb-4">Lista Książek</h1>
+    {% if is_superuser %}
+    <a href="{% url 'myapp/dodaj_ksiazke' %}" class="btn btn-primary mb-3">Dodaj Książkę</a>
+    {% endif %}
+    <div class="row">
+        {% for ksiazka in ksiazki %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url 'myapp/szczegoly_ksiazki' ksiazka.id %}">{{ ksiazka.tytul }}</a>
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ ksiazka.get_autor }}</h6>
+                    <p class="card-text">Rok wydania: {{ ksiazka.rok_wydania }}</p>
+                    <p class="card-text">ISBN: {{ ksiazka.ISBN }}</p>
+                    {% if is_superuser %}
+                    <a href="{% url 'myapp/edytuj_ksiazke' ksiazka.id %}" class="btn btn-warning text-white">Edytuj</a>
+                    <a href="{% url 'myapp/usun_ksiazke' ksiazka.id %}" class="btn btn-danger text-white">Usuń</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

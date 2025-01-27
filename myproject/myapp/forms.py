@@ -6,4 +6,11 @@ from .models import Uzytkownik
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = Uzytkownik
-        fields = ('email', 'imie', 'nazwisko', 'password1', 'password2')
+        fields = ('email', 'imie', 'nazwisko', 'password1', 'password2') 
+
+from .models import Ksiazka
+
+class KsiazkaForm(forms.ModelForm):
+    class Meta:
+        model = Ksiazka
+        fields = ['tytul', 'autor', 'wydawnictwo', 'rok_wydania', 'liczba_stron', 'ISBN', 'okładka', 'gatunek']
