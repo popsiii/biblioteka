@@ -79,16 +79,24 @@ from .models import Ksiazka, Wypozyczenia, HistoriaWypozyczen
 from django.views.decorators.http import require_POST
 from django.contrib.auth import logout
 
+# filepath: /Users/werus/biblioteka/myproject/myapp/views.py
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from .models import Wypozyczenia, HistoriaWypozyczen, Uzytkownik
+
 @login_required
 def profile(request):
     if request.user.is_staff:
         wypozyczenia = Wypozyczenia.objects.all()
+        uzytkownicy = Uzytkownik.objects.all()
     else:
         wypozyczenia = Wypozyczenia.objects.filter(uzytkownik=request.user)
+        uzytkownicy = None
     historia_wypozyczen = HistoriaWypozyczen.objects.filter(uzytkownik=request.user)
     return render(request, 'myapp/profile.html', {
         'wypozyczenia': wypozyczenia,
-        'historia_wypozyczen': historia_wypozyczen
+        'historia_wypozyczen': historia_wypozyczen,
+        'uzytkownicy': uzytkownicy
     })
 
 @require_POST

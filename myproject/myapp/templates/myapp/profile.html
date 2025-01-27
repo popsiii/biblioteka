@@ -52,4 +52,19 @@
     </ul>
 </div>
 {% endif %}
+
+{% if user.is_staff %}
+<div class="card">
+    <div class="card-header">
+        Lista użytkowników
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for uzytkownik in uzytkownicy %}
+        <li class="list-group-item">
+            {{ uzytkownik.id }} - {{ uzytkownik.email }} - {{ uzytkownik.imie }} - {{ uzytkownik.nazwisko }}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
 {% endblock %}
