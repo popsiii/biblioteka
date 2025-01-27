@@ -131,3 +131,5 @@ AUTH_USER_MODEL = 'myapp.Uzytkownik'
 
 # filepath: /Users/werus/biblioteka/myproject/myproject/settings.py
 LOGIN_REDIRECT_URL = '/profile/'
+# filepath: /Users/werus/biblioteka/myproject/myproject/settings.py
+LOGOUT_REDIRECT_URL = '/logout/'
