@@ -56,7 +56,11 @@ def profile(request):
 
 @login_required
 def wypozycz_ksiazke(request):
-    ksiazki = Ksiazka.objects.all()
+    query = request.GET.get('q')
+    if query:
+        ksiazki = Ksiazka.objects.filter(tytul__icontains=query)  # Dopasowanie po tytule
+    else:
+        ksiazki = Ksiazka.objects.all()
     return render(request, 'myapp/wypozycz_ksiazke.html', {'ksiazki': ksiazki})
 
 @login_required
