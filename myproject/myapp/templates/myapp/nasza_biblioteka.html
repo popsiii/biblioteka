@@ -1,15 +1,25 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 <style>
     .biblioteka-container {
-        font-family: 'Comic Sans', sans-serif;
-        text-align: center;
+        text-align: center; /* Wyśrodkowanie tekstu */
+        padding: 20px;
+    }
+    .biblioteka-foto {
+        max-width: 450px; /* Szerokość zdjęcia */
+        height: auto; /* Zachowanie proporcji */
+        margin: 20px auto; /* Wyśrodkowanie zdjęcia */
+        display: block;
     }
 </style>
+
 <div class="container biblioteka-container">
     <h1>NAJLEPSZA BIBLIOTEKA</h1>
     <p>Witamy w naszej bibliotece! Jest to dzieło Marty i Weroniki (WOW).</p>
     <p>Nasza biblioteka oferuje szeroki wybór książek z różnych dziedzin. Zapraszamy do założenia konta!</p>
+    <img src="{% static 'images/kozuch.jpg' %}" alt="my i najjaśniejsza z gwiazd" class="biblioteka-foto">
+    <p>Cześć KOchani! Wyobraźcie sobie, że ja jadę, we wtorek o godzinie 21 coś tam. Na melanż, ha ha ha !</p>
 </div>
 {% endblock %}
