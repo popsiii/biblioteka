@@ -123,12 +123,7 @@ def is_superuser(user):
 @login_required
 def home(request):
     ksiazki = Ksiazka.objects.all()
-    return render(request, 'myapp/home.html', {'ksiazki': ksiazki})
-
-@login_required
-def szczegoly_ksiazki(request, ksiazka_id):
-    ksiazka = get_object_or_404(Ksiazka, id=ksiazka_id)
-    return render(request, 'myapp/szczegoly_ksiazki.html', {'ksiazka': ksiazka})
+    return render(request, 'home.html', {'ksiazki': ksiazki})
 
 
 @user_passes_test(is_superuser)

@@ -1,7 +1,7 @@
 import profile
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import KsiazkaViewSet, WypozyczeniaViewSet, HistoriaWypozyczenViewSet, SignUpView, home, nasza_biblioteka, profile, szczegoly_ksiazki, wypozycz, wypozycz_ksiazke, zwroc_ksiazke
+from .views import KsiazkaViewSet, WypozyczeniaViewSet, HistoriaWypozyczenViewSet, SignUpView, home, nasza_biblioteka, profile, wypozycz, wypozycz_ksiazke, zwroc_ksiazke
 from django.contrib.auth import views as auth_views
 from .views import lista_ksiazek, dodaj_ksiazke, edytuj_ksiazke, usun_ksiazke
 
@@ -27,7 +27,6 @@ urlpatterns = [
     path('ksiazki/dodaj/', dodaj_ksiazke, name='dodaj_ksiazke'),
     path('ksiazki/edytuj/<int:ksiazka_id>/', edytuj_ksiazke, name='edytuj_ksiazke'),
     path('ksiazki/usun/<int:ksiazka_id>/', usun_ksiazke, name='usun_ksiazke'),
-    path('ksiazki/szczegoly/<int:ksiazka_id>/', szczegoly_ksiazki, name='szczegoly_ksiazki'),
 
 ]
 
