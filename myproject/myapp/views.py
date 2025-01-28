@@ -133,11 +133,7 @@ def home(request):
 @user_passes_test(is_superuser)
 @login_required
 def lista_ksiazek(request):
-    query = request.GET.get('q')
-    if query:
-        ksiazki = Ksiazka.objects.filter(tytul__istartswith=query)
-    else:
-        ksiazki = Ksiazka.objects.all()
+    ksiazki = Ksiazka.objects.all()
     return render(request, 'myapp/lista_ksiazek.html', {'ksiazki': ksiazki})
 
 @user_passes_test(is_superuser)

@@ -1,35 +1,24 @@
-<!-- filepath: /Users/werus/biblioteka/myproject/myapp/templates/myapp/lista_ksiazek.html -->
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-    <h1>Lista książek</h1>
-    <form method="get" action="{% url 'lista_ksiazek' %}">
-        <div class="form-group">
-            <label for="search">Wyszukaj książkę po literze tytułu:</label>
-            <input type="text" name="q" id="search" class="form-control" placeholder="Wprowadź literę tytułu">
+<div class="container mt-4">
+    <h1 class="mb-4">Lista Książek</h1>
+    <a href="{% url 'dodaj_ksiazke' %}" class="btn btn-primary mb-3">Dodaj Książkę</a>
+    <div class="row">
+        {% for ksiazka in ksiazki %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ ksiazka.tytul }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ ksiazka.get_autor }}</h6>
+                    <p class="card-text">Rok wydania: {{ ksiazka.rok_wydania }}</p>
+                    <p class="card-text">ISBN: {{ ksiazka.ISBN }}</p>
+                    <a href="{% url 'edytuj_ksiazke' ksiazka.id %}" class="btn btn-warning">Edytuj</a>
+                    <a href="{% url 'usun_ksiazke' ksiazka.id %}" class="btn btn-danger">Usuń</a>
+                </div>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Szukaj</button>
-    </form>
-    <table class="table table-striped mt-4">
-        <thead>
-            <tr>
-                <th>Tytuł</th>
-                <th>Autor</th>
-                <th>Akcje</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for ksiazka in ksiazki %}
-            <tr>
-                <td>{{ ksiazka.tytul }}</td>
-                <td>{{ ksiazka.autor }}</td>
-                <td>
-                    <a class="btn btn-success" href="{% url 'wypozycz' ksiazka.id %}">Wypożycz</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
