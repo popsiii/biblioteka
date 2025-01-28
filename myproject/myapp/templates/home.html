@@ -2,8 +2,8 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="mb-4">Witamy w Bibliotece</h1>
-    <p>To jest strona główna naszej aplikacji.</p>
+    <h1 class="mb-4">Witamy w Naszej Bajce</h1>
+    <p>To jest miejsce, gdzie zabawa się zaczyna.</p>
     {% if is_superuser %}
     <a href="{% url 'dodaj_ksiazke' %}" class="btn btn-primary mb-3">Dodaj Książkę</a>
     {% endif %}
